@@ -19,8 +19,6 @@ MODEL_ARGS=(
    --kv-channels 128
    --qk-layernorm
    --no-persist-layer-norm
-   --post-self-attn-layernorm
-   --post-mlp-layernorm
    --use-rope-scaling
    --rotary-scaling-factor 8.0
    --no-rope-fusion
