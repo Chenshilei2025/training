@@ -1,4 +1,5 @@
 MODEL_ARGS=(
+   --spec "slime_plugins.models.olmo3" "get_olmo3_spec"
    --transformer-impl local
    --swiglu
    --num-layers 32
