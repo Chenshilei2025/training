@@ -111,7 +111,7 @@ GRPO_ARGS=(--advantage-estimator grpo --use-kl-loss --kl-loss-coef "${LOYAL_MIXE
 if [[ "${LOYAL_MIXED_GRPO_STD_NORMALIZATION:-1}" != "1" ]]; then
   GRPO_ARGS+=(--disable-grpo-std-normalization)
 fi
-PERF_ARGS=(--tensor-model-parallel-size 1 --recompute-granularity full --recompute-method uniform --recompute-num-layers 1 --use-dynamic-batch-size --max-tokens-per-gpu "${LOYAL_MIXED_MAX_TOKENS_PER_GPU}" --update-weight-buffer-size "${LOYAL_MIXED_UPDATE_WEIGHT_BUFFER_SIZE:-536870912}")
+PERF_ARGS=(--tensor-model-parallel-size "${LOYAL_MIXED_TENSOR_MODEL_PARALLEL_SIZE:-1}" --recompute-granularity full --recompute-method uniform --recompute-num-layers 1 --use-dynamic-batch-size --max-tokens-per-gpu "${LOYAL_MIXED_MAX_TOKENS_PER_GPU}" --update-weight-buffer-size "${LOYAL_MIXED_UPDATE_WEIGHT_BUFFER_SIZE:-536870912}")
 SGLANG_ARGS=(--rollout-num-gpus-per-engine 1 --sglang-mem-fraction-static "${LOYAL_MIXED_SGLANG_MEM_FRACTION_STATIC}" --sglang-server-concurrency "${LOYAL_MIXED_SGLANG_SERVER_CONCURRENCY}")
 EVAL_ARGS=()
 # Optional held-out validation for mixed runs.  This uses the same mixed

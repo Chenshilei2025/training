@@ -53,6 +53,7 @@ assert config["mixed_ablation"]["ratio"] == "E2M1"
 assert abs(float(env["LOYAL_MIXED_EIL_BATCH_FRACTION"]) - (2 / 3)) < 1e-9
 assert int(env["LOYAL_MIXED_GLOBAL_BATCH_SIZE"]) == int(env["LOYAL_MIXED_ROLLOUT_BATCH_SIZE"]) * int(env["LOYAL_MIXED_SAMPLES_PER_PROMPT"])
 assert int(env["LOYAL_MIXED_TRAIN_GPU_COUNT"]) + int(env["LOYAL_MIXED_ROLLOUT_GPU_COUNT"]) == int(env["LOYAL_MIXED_RAY_NUM_GPUS"])
+assert int(env["LOYAL_MIXED_TENSOR_MODEL_PARALLEL_SIZE"]) == 2
 assert env["LOYAL_MIXED_LEARNING_RATE"] == "2e-6"
 assert int(env["LOYAL_MIXED_SCHEDULE_TOTAL_ROLLOUTS"]) == 200
 assert env["LOYAL_REFUSE_CEPH_ACTIVE_PATHS"] == "0"

@@ -69,6 +69,7 @@ export LOYAL_MIXED_ROLLOUT_BATCH_SIZE="64"
 export LOYAL_MIXED_SAMPLES_PER_PROMPT="8"
 export LOYAL_MIXED_MAX_RESPONSE_LEN="1024"
 export LOYAL_MIXED_MAX_TOKENS_PER_GPU="4096"
+export LOYAL_MIXED_TENSOR_MODEL_PARALLEL_SIZE="2"
 export LOYAL_MIXED_LEARNING_RATE="2e-6"
 export LOYAL_MIXED_KL_LOSS_COEF="0.05"
 export LOYAL_MIXED_ENTROPY_COEF="0.002"
@@ -112,7 +113,7 @@ cat >"${POST_ROOT}/launch_env.json" <<EOF
   "runtime_conda_env": "${CONDA_ENV}",
   "runtime_megatron_root": "${LOYAL_MEGATRON_ROOT}",
   "eval_steps": "${LOYAL_DIRECT_EVAL_STEPS}",
-  "gpu_layout": "2 train + 2 rollout on ${LOYAL_PHASE1_GPUS:-0,1,2,3}"
+  "gpu_layout": "2 train (tp=2) + 2 rollout on ${LOYAL_PHASE1_GPUS:-0,1,2,3}"
 }
 EOF
 
