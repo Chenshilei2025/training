@@ -2,6 +2,17 @@ import re
 import torch
 
 
+def _expand_head_norm_to_hidden(args, param):
+    hidden_size = args.hidden_size
+    if param.numel() == hidden_size:
+        return param
+    if hidden_size % param.numel() == 0:
+        return param.repeat(hidden_size // param.numel()).contiguous()
+    raise ValueError(
+        f"Cannot expand OLMo3 q/k norm with shape {tuple(param.shape)} to hidden_size={hidden_size}"
+    )
+
+
 def convert_olmo3_to_hf(args, name, param):
     if name == "module.module.embedding.word_embeddings.weight":
         return [("model.embed_tokens.weight", param)]
@@ -50,8 +61,8 @@ def convert_olmo3_to_hf(args, name, param):
         elif rest == "post_mlp_layernorm.weight":
             return [(f"model.layers.{layer_idx}.post_feedforward_layernorm.weight", param)]
         elif rest == "self_attention.q_layernorm.weight":
-            return [(f"model.layers.{layer_idx}.self_attn.q_norm.weight", param)]
+            return [(f"model.layers.{layer_idx}.self_attn.q_norm.weight", _expand_head_norm_to_hidden(args, param))]
         elif rest == "self_attention.k_layernorm.weight":
-            return [(f"model.layers.{layer_idx}.self_attn.k_norm.weight", param)]
+            return [(f"model.layers.{layer_idx}.self_attn.k_norm.weight", _expand_head_norm_to_hidden(args, param))]
 
     raise ValueError(f"Unknown parameter name: {name}")
