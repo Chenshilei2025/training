@@ -98,10 +98,10 @@ def all_gather_params_async(
     for info, param in param_infos_and_params:
         # Prepare async all_gather
         if "expert_bias" in info.name:
-            gather_tasks.append((info, param, None, None, None))
+            gather_tasks.append((info, param, None, None, None, None))
             handles.append(None)
         elif not param.tensor_model_parallel or getattr(param, "parallel_mode", None) == "duplicated":
-            gather_tasks.append((info, param.data, None, None, None))
+            gather_tasks.append((info, param.data, None, None, None, None))
             handles.append(None)
         else:
             # Start async all_gather
@@ -131,7 +131,7 @@ def all_gather_params_async(
             param = direct_param
         else:
             # Process the gathered partitions (same logic as original all_gather_param)
-            assert partition_dim is not None, "partition_stride != 1 is not supported"
+            assert partition_dim is not None, "partition_dim missing for TP parameter"
             assert partition_stride is not None, "partition_stride missing for TP parameter"
             param = _merge_tensor_parallel_partitions(
                 info.name,
