@@ -71,6 +71,8 @@ export "${LOAD_VAR}=${!LOAD_VAR:-${CHECKPOINT_DIR}}"
 export "${SAVE_VAR}=${!SAVE_VAR:-${CHECKPOINT_DIR}}"
 
 export LOYAL_MEGATRON_ROOT="${LOYAL_MEGATRON_ROOT:-/root/experiment_g_runtime/Megatron-LM}"
+export CUDA_HOME="${CUDA_HOME:-${CONDA_ENV}/lib/python3.12/site-packages/nvidia/cuda_runtime}"
+export LD_LIBRARY_PATH="${CUDA_HOME}/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 export PYTHONPATH="${PROJECT_ROOT}:${PROJECT_ROOT}/slime:${LOYAL_MEGATRON_ROOT}:${PYTHONPATH:-}"
 
 if [[ -z "${CUDA_VISIBLE_DEVICES:-}" ]]; then

@@ -18,6 +18,8 @@ MEGATRON_ROOT="${LOYAL_MEGATRON_ROOT:-/root/Megatron-LM}"
 # before starting Ray so direct-driver launches have the same import context
 # as `ray job submit` runtime environments.
 export PYTHONPATH="${PROJECT_ROOT}:${SLIME_ROOT}:${MEGATRON_ROOT}${PYTHONPATH:+:${PYTHONPATH}}"
+export CUDA_HOME="${CUDA_HOME:-/root/experiment_g_runtime/conda/env/lib/python3.12/site-packages/nvidia/cuda_runtime}"
+export LD_LIBRARY_PATH="${CUDA_HOME}/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
 RUNTIME_ENV_JSON="{\"env_vars\":{\"PYTHONPATH\":\"${PROJECT_ROOT}:${SLIME_ROOT}:${MEGATRON_ROOT}\",\"CUDA_DEVICE_MAX_CONNECTIONS\":\"1\"${RUNTIME_EXTRA:-},\"NO_PROXY\":\"${NO_PROXY:-}\",\"no_proxy\":\"${no_proxy:-}\"}}"
 TRAIN_COMMAND=(python3 "${SLIME_ROOT}/train.py" \
